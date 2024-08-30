@@ -79,7 +79,7 @@ For classification the remaining columns were used. These include:
 11. Status
 
 The main focus of the classification would be to classify the patients based on whether there status. Below is a representation of how they each individually relate to the status
-![Grouped by status](Classification_grouped_by_Status)
+![Grouped by status](./Classification_grouped_by_Status)
 
 There are two models that have been used for classification
 1. Logistic Regression
