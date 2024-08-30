@@ -50,7 +50,7 @@ The columns used include:
 These column all have numerical values that will be used for creating a linear regression to calculate the number of survival months and which factors affect the survival months.
 
 Here is a brief image of what the pair plot of these variables are:
-![Pair Plots]("Pair plots for numerical cols")
+![Pair Plots](./Pair_plots_for_numerical_cols.png)
 
 
 ###### Results of the linear regression
