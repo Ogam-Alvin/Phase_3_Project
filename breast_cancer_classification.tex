@@ -1,0 +1,2054 @@
+\documentclass[11pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Keep aspect ratio if custom image width or height is specified
+    \setkeys{Gin}{keepaspectratio}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+
+    \usepackage{iftex}
+    \ifPDFTeX
+        \usepackage[T1]{fontenc}
+        \IfFileExists{alphabeta.sty}{
+              \usepackage{alphabeta}
+          }{
+              \usepackage[mathletters]{ucs}
+              \usepackage[utf8x]{inputenc}
+          }
+    \else
+        \usepackage{fontspec}
+        \usepackage{unicode-math}
+    \fi
+
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics
+                         % to support a larger range
+    \makeatletter % fix for old versions of grffile with XeLaTeX
+    \@ifpackagelater{grffile}{2019/11/01}
+    {
+      % Do nothing on new versions
+    }
+    {
+      \def\Gread@@xetex#1{%
+        \IfFileExists{"\Gin@base".bb}%
+        {\Gread@eps{\Gin@base.bb}}%
+        {\Gread@@xetex@aux#1}%
+      }
+    }
+    \makeatother
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage{array}     % table support for pandoc >= 2.11.3
+    \usepackage{calc}      % table minipage width calculation for pandoc >= 2.11.1
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{soul}      % strikethrough (\st) support for pandoc >= 3.0.0
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % common color for the border for error outputs.
+    \definecolor{outerrorbackground}{HTML}{FFDFDF}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+
+
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{breast\_cancer\_classification}
+    
+    
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\@namedef{PY@tok@w}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\@namedef{PY@tok@c}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cp}{\def\PY@tc##1{\textcolor[rgb]{0.61,0.40,0.00}{##1}}}
+\@namedef{PY@tok@k}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kt}{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\@namedef{PY@tok@o}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ow}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@nb}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nf}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@ne}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.80,0.25,0.22}{##1}}}
+\@namedef{PY@tok@nv}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@no}{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\@namedef{PY@tok@nl}{\def\PY@tc##1{\textcolor[rgb]{0.46,0.46,0.00}{##1}}}
+\@namedef{PY@tok@ni}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@na}{\def\PY@tc##1{\textcolor[rgb]{0.41,0.47,0.13}{##1}}}
+\@namedef{PY@tok@nt}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nd}{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@s}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sd}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@si}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@se}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.36,0.12}{##1}}}
+\@namedef{PY@tok@sr}{\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@ss}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sx}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@m}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@gh}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gu}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gd}{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\@namedef{PY@tok@gi}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.52,0.00}{##1}}}
+\@namedef{PY@tok@gr}{\def\PY@tc##1{\textcolor[rgb]{0.89,0.00,0.00}{##1}}}
+\@namedef{PY@tok@ge}{\let\PY@it=\textit}
+\@namedef{PY@tok@gs}{\let\PY@bf=\textbf}
+\@namedef{PY@tok@ges}{\let\PY@bf=\textbf\let\PY@it=\textit}
+\@namedef{PY@tok@gp}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@go}{\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@gt}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\@namedef{PY@tok@err}{\def\PY@bc##1{{\setlength{\fboxsep}{\string -\fboxrule}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}}
+\@namedef{PY@tok@kc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kd}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kr}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@bp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@fm}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@vc}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vg}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vi}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vm}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sa}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sb}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sc}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@dl}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s2}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sh}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s1}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@mb}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mf}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mh}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mi}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@il}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mo}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ch}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cm}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cpf}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@c1}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cs}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb.
+    \makeatletter
+        \newbox\Wrappedcontinuationbox
+        \newbox\Wrappedvisiblespacebox
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}}
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}}
+        \newcommand*\Wrappedcontinuationindent {3ex }
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox}
+        % Take advantage of the already applied Pygments mark-up to insert
+        % potential linebreaks for TeX processing.
+        %        {, <, #, %, $, ' and ": go to next line.
+        %        _, }, ^, &, >, - and ~: stay at end of broken line.
+        % Use of \textquotesingle for straight quote.
+        \newcommand*\Wrappedbreaksatspecials {%
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}%
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}%
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}%
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}%
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}%
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}%
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}%
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}%
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}%
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}%
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}%
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}%
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}%
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}%
+        }
+        % Some characters . , ; ? ! / are not pygmentized.
+        % This macro makes them "active" and they will insert potential linebreaks
+        \newcommand*\Wrappedbreaksatpunct {%
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}%
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}%
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}%
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}%
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}%
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}%
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}%
+            \catcode`\.\active
+            \catcode`\,\active
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active
+            \lccode`\~`\~
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        {\ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    
+    \maketitle
+    
+    
+
+    
+    \section{BREAST CANCER CLASSIFICATION
+PROJECT}\label{breast-cancer-classification-project}
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio]{download.jpg}}
+\caption{Breast cancer image}
+\end{figure}
+
+\subsection{Business Problem}\label{business-problem}
+
+Death among women has various factors and one of the leading causes
+being \texttt{Breast\ Cancer}. A good way of improving the survival
+rates and giving out personalized treatments depends on whether or not
+it can be detected early or predicted in advance. The intricacy and
+diversity of patient data, including age, tumor size, hormone receptor
+status, and staging, can make it difficult for medical professionals to
+assess the severity and course of the illness.
+
+A hospital that deals with breast cancer patients want a solution that
+can be used to classify patients based on their breast cancer
+characteristics and tell if they are likely to experience a more
+aggressive cancer. then secondly they would like to be able to predict a
+patients survival time based oon various factors both medical and
+demographic. The company can increase the precision of diagnosis and
+treatment strategies by using machine learning to predict survival
+months and classify the cancer status (e.g., aggressive
+vs.~non-aggressive). The ultimate goal is to increase survival rates,
+reduce patient suffering, and optimize the overall cost-effectiveness of
+breast cancer care.
+
+\subsection{Business Understanding}\label{business-understanding}
+
+\subsubsection{Objectives}\label{objectives}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Create a predictive model to estimate survival time based on medical
+  and demographic factors.
+\item
+  Develop a machine learning model to classify patients into categories
+  such as aggressive vs.~non-aggressive cancer.
+\end{enumerate}
+
+\subsubsection{Stakeholders:}\label{stakeholders}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Patients: Directly affected by the treatment and survival outcomes.
+\item
+  Medical Professionals: Need accurate tools to make informed treatment
+  decisions.
+\item
+  Hospital Administrators: Focused on improving patient outcomes and
+  optimizing operational costs.
+\end{enumerate}
+
+Assumption: The quality and completeness of the data provided are
+sufficient for building accurate models.
+
+    \section{Step 1: Data Exploration}\label{step-1-data-exploration}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{1}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k+kn}{import} \PY{n}{StandardScaler}
+\PY{k+kn}{import} \PY{n+nn}{statsmodels}\PY{n+nn}{.}\PY{n+nn}{api} \PY{k}{as} \PY{n+nn}{sm}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k+kn}{import} \PY{n}{train\PYZus{}test\PYZus{}split}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k+kn}{import} \PY{n}{LogisticRegression}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k+kn}{import} \PY{n}{classification\PYZus{}report}\PY{p}{,}\PY{n}{accuracy\PYZus{}score}\PY{p}{,} \PY{n}{confusion\PYZus{}matrix}\PY{p}{,} \PY{n}{roc\PYZus{}curve}\PY{p}{,} \PY{n}{auc}\PY{p}{,} \PY{n}{roc\PYZus{}auc\PYZus{}score}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{tree} \PY{k+kn}{import} \PY{n}{DecisionTreeClassifier}
+\PY{k+kn}{from} \PY{n+nn}{imblearn}\PY{n+nn}{.}\PY{n+nn}{over\PYZus{}sampling} \PY{k+kn}{import} \PY{n}{SMOTE}
+\PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+\PY{o}{\PYZpc{}}\PY{n}{matplotlib} \PY{n}{inline}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}Load the dataset}
+\PY{n}{data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Breast\PYZus{}Cancer.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{data}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+      Age   Race Marital Status T Stage  N Stage 6th Stage  \textbackslash{}
+0      68  White        Married       T1      N1       IIA
+1      50  White        Married       T2      N2      IIIA
+2      58  White       Divorced       T3      N3      IIIC
+3      58  White        Married       T1      N1       IIA
+4      47  White        Married       T2      N1       IIB
+{\ldots}   {\ldots}    {\ldots}            {\ldots}      {\ldots}     {\ldots}       {\ldots}
+4019   62  Other        Married       T1      N1       IIA
+4020   56  White       Divorced       T2      N2      IIIA
+4021   68  White        Married       T2      N1       IIB
+4022   58  Black       Divorced       T2      N1       IIB
+4023   46  White        Married       T2      N1       IIB
+
+                  differentiate Grade   A Stage  Tumor Size Estrogen Status  \textbackslash{}
+0         Poorly differentiated     3  Regional           4        Positive
+1     Moderately differentiated     2  Regional          35        Positive
+2     Moderately differentiated     2  Regional          63        Positive
+3         Poorly differentiated     3  Regional          18        Positive
+4         Poorly differentiated     3  Regional          41        Positive
+{\ldots}                         {\ldots}   {\ldots}       {\ldots}         {\ldots}             {\ldots}
+4019  Moderately differentiated     2  Regional           9        Positive
+4020  Moderately differentiated     2  Regional          46        Positive
+4021  Moderately differentiated     2  Regional          22        Positive
+4022  Moderately differentiated     2  Regional          44        Positive
+4023  Moderately differentiated     2  Regional          30        Positive
+
+     Progesterone Status  Regional Node Examined  Reginol Node Positive  \textbackslash{}
+0               Positive                      24                      1
+1               Positive                      14                      5
+2               Positive                      14                      7
+3               Positive                       2                      1
+4               Positive                       3                      1
+{\ldots}                  {\ldots}                     {\ldots}                    {\ldots}
+4019            Positive                       1                      1
+4020            Positive                      14                      8
+4021            Negative                      11                      3
+4022            Positive                      11                      1
+4023            Positive                       7                      2
+
+      Survival Months Status
+0                  60  Alive
+1                  62  Alive
+2                  75  Alive
+3                  84  Alive
+4                  50  Alive
+{\ldots}               {\ldots}    {\ldots}
+4019               49  Alive
+4020               69  Alive
+4021               69  Alive
+4022               72  Alive
+4023              100  Alive
+
+[4024 rows x 16 columns]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{3}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}Look at the basic info of the dataset}
+\PY{n}{data}\PY{o}{.}\PY{n}{info}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 4024 entries, 0 to 4023
+Data columns (total 16 columns):
+ \#   Column                  Non-Null Count  Dtype
+---  ------                  --------------  -----
+ 0   Age                     4024 non-null   int64
+ 1   Race                    4024 non-null   object
+ 2   Marital Status          4024 non-null   object
+ 3   T Stage                 4024 non-null   object
+ 4   N Stage                 4024 non-null   object
+ 5   6th Stage               4024 non-null   object
+ 6   differentiate           4024 non-null   object
+ 7   Grade                   4024 non-null   object
+ 8   A Stage                 4024 non-null   object
+ 9   Tumor Size              4024 non-null   int64
+ 10  Estrogen Status         4024 non-null   object
+ 11  Progesterone Status     4024 non-null   object
+ 12  Regional Node Examined  4024 non-null   int64
+ 13  Reginol Node Positive   4024 non-null   int64
+ 14  Survival Months         4024 non-null   int64
+ 15  Status                  4024 non-null   object
+dtypes: int64(5), object(11)
+memory usage: 503.1+ KB
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{4}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}Check for missing values}
+\PY{n}{data}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{4}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Age                       0
+Race                      0
+Marital Status            0
+T Stage                   0
+N Stage                   0
+6th Stage                 0
+differentiate             0
+Grade                     0
+A Stage                   0
+Tumor Size                0
+Estrogen Status           0
+Progesterone Status       0
+Regional Node Examined    0
+Reginol Node Positive     0
+Survival Months           0
+Status                    0
+dtype: int64
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}Check for any duplications in the dataset}
+\PY{n}{data}\PY{o}{.}\PY{n}{duplicated}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+1
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{6}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}Drop the duplicate values found}
+\PY{n}{data}\PY{o}{.}\PY{n}{drop\PYZus{}duplicates}\PY{p}{(}\PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}check if there still any duplicates left}
+\PY{n}{data}\PY{o}{.}\PY{n}{duplicated}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{6}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+0
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{7}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}Look at the total number of unique values within the dataset}
+\PY{k}{for} \PY{n}{column} \PY{o+ow}{in} \PY{n}{data}\PY{o}{.}\PY{n}{columns}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{column}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ has }\PY{l+s+si}{\PYZob{}}\PY{n}{data}\PY{p}{[}\PY{n}{column}\PY{p}{]}\PY{o}{.}\PY{n}{nunique}\PY{p}{(}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ unique values}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Age has 40 unique values
+Race has 3 unique values
+Marital Status has 5 unique values
+T Stage  has 4 unique values
+N Stage has 3 unique values
+6th Stage has 5 unique values
+differentiate has 4 unique values
+Grade has 4 unique values
+A Stage has 2 unique values
+Tumor Size has 110 unique values
+Estrogen Status has 2 unique values
+Progesterone Status has 2 unique values
+Regional Node Examined has 54 unique values
+Reginol Node Positive has 38 unique values
+Survival Months has 107 unique values
+Status has 2 unique values
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{8}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{8}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+               Age   Tumor Size  Regional Node Examined  \textbackslash{}
+count  4023.000000  4023.000000             4023.000000
+mean     53.969923    30.477007               14.358439
+std       8.963118    21.121253                8.100241
+min      30.000000     1.000000                1.000000
+25\%      47.000000    16.000000                9.000000
+50\%      54.000000    25.000000               14.000000
+75\%      61.000000    38.000000               19.000000
+max      69.000000   140.000000               61.000000
+
+       Reginol Node Positive  Survival Months
+count            4023.000000      4023.000000
+mean                4.158837        71.301765
+std                 5.109724        22.923009
+min                 1.000000         1.000000
+25\%                 1.000000        56.000000
+50\%                 2.000000        73.000000
+75\%                 5.000000        90.000000
+max                46.000000       107.000000
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \section{Step 2: Exploratory Data
+Analysis}\label{step-2-exploratory-data-analysis}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{9}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}here we are going to group the data to help us later on when performing regression and classification}
+\PY{n}{numerical\PYZus{}cols} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Tumor Size}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Regional Node Examined}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Reginol Node Positive}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survival Months}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{categorical\PYZus{}cols} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Race}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Marital Status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{T Stage }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{N Stage}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{6th Stage}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{differentiate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Grade}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A Stage}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Estrogen Status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Progesterone Status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \subsection{Linear Regression}\label{linear-regression}
+
+for this part we want to create a simple model that will see the
+numerical data being fitted into a linear regression in order to predict
+the number of survival months
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{10}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}Use the numerical\PYZus{}cols as the dataframe to use for creating the Linear regression}
+\PY{n}{data\PYZus{}numerals} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{n}{numerical\PYZus{}cols}\PY{p}{]}
+\PY{c+c1}{\PYZsh{}create a pairplot for the dataframe}
+\PY{n}{sns}\PY{o}{.}\PY{n}{pairplot}\PY{p}{(}\PY{n}{data\PYZus{}numerals}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{suptitle}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Pair Plot of data\PYZus{}numerals Columns}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{l+m+mf}{1.02}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Correlation Matrix}
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+\PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{data\PYZus{}numerals}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{annot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{coolwarm}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fmt}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.2f}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Correlation Matrix}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+c:\textbackslash{}Users\textbackslash{}User\textbackslash{}.conda\textbackslash{}envs\textbackslash{}learn-env\textbackslash{}Lib\textbackslash{}site-packages\textbackslash{}seaborn\textbackslash{}\_oldcore.py:1119:
+FutureWarning: use\_inf\_as\_na option is deprecated and will be removed in a
+future version. Convert inf values to NaN before operating instead.
+  with pd.option\_context('mode.use\_inf\_as\_na', True):
+c:\textbackslash{}Users\textbackslash{}User\textbackslash{}.conda\textbackslash{}envs\textbackslash{}learn-env\textbackslash{}Lib\textbackslash{}site-packages\textbackslash{}seaborn\textbackslash{}\_oldcore.py:1119:
+FutureWarning: use\_inf\_as\_na option is deprecated and will be removed in a
+future version. Convert inf values to NaN before operating instead.
+  with pd.option\_context('mode.use\_inf\_as\_na', True):
+c:\textbackslash{}Users\textbackslash{}User\textbackslash{}.conda\textbackslash{}envs\textbackslash{}learn-env\textbackslash{}Lib\textbackslash{}site-packages\textbackslash{}seaborn\textbackslash{}\_oldcore.py:1119:
+FutureWarning: use\_inf\_as\_na option is deprecated and will be removed in a
+future version. Convert inf values to NaN before operating instead.
+  with pd.option\_context('mode.use\_inf\_as\_na', True):
+c:\textbackslash{}Users\textbackslash{}User\textbackslash{}.conda\textbackslash{}envs\textbackslash{}learn-env\textbackslash{}Lib\textbackslash{}site-packages\textbackslash{}seaborn\textbackslash{}\_oldcore.py:1119:
+FutureWarning: use\_inf\_as\_na option is deprecated and will be removed in a
+future version. Convert inf values to NaN before operating instead.
+  with pd.option\_context('mode.use\_inf\_as\_na', True):
+c:\textbackslash{}Users\textbackslash{}User\textbackslash{}.conda\textbackslash{}envs\textbackslash{}learn-env\textbackslash{}Lib\textbackslash{}site-packages\textbackslash{}seaborn\textbackslash{}\_oldcore.py:1119:
+FutureWarning: use\_inf\_as\_na option is deprecated and will be removed in a
+future version. Convert inf values to NaN before operating instead.
+  with pd.option\_context('mode.use\_inf\_as\_na', True):
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{breast_cancer_classification_files/breast_cancer_classification_13_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{breast_cancer_classification_files/breast_cancer_classification_13_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{11}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}Initialize the scaler}
+\PY{n}{scaler} \PY{o}{=} \PY{n}{StandardScaler}\PY{p}{(}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{}Select the feature and target variables}
+\PY{c+c1}{\PYZsh{}define the target }
+\PY{n}{y\PYZus{}lin} \PY{o}{=} \PY{n}{data\PYZus{}numerals}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survival Months}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{}fit and transform the features}
+\PY{n}{X\PYZus{}lin} \PY{o}{=} \PY{n}{scaler}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{data\PYZus{}numerals}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survival Months}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{12}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}Now let\PYZsq{}s create a linear regression model that will cater for the numerical data that we have in the data set}
+\PY{n}{lg\PYZus{}model} \PY{o}{=} \PY{n}{sm}\PY{o}{.}\PY{n}{OLS}\PY{p}{(}\PY{n}{y\PYZus{}lin}\PY{p}{,} \PY{n}{sm}\PY{o}{.}\PY{n}{add\PYZus{}constant}\PY{p}{(}\PY{n}{X\PYZus{}lin}\PY{p}{)}\PY{p}{)}
+\PY{n}{lg\PYZus{}results} \PY{o}{=} \PY{n}{lg\PYZus{}model}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{p}{)}
+\PY{n}{lg\PYZus{}results}\PY{o}{.}\PY{n}{summary}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+ 
+            
+\prompt{Out}{outcolor}{12}{}
+    
+    \begin{center}
+\begin{tabular}{lclc}
+\toprule
+\textbf{Dep. Variable:}    & Survival Months  & \textbf{  R-squared:         } &     0.023   \\
+\textbf{Model:}            &       OLS        & \textbf{  Adj. R-squared:    } &     0.022   \\
+\textbf{Method:}           &  Least Squares   & \textbf{  F-statistic:       } &     23.57   \\
+\textbf{Date:}             & Sat, 31 Aug 2024 & \textbf{  Prob (F-statistic):} &  2.73e-19   \\
+\textbf{Time:}             &     04:04:39     & \textbf{  Log-Likelihood:    } &   -18262.   \\
+\textbf{No. Observations:} &        4023      & \textbf{  AIC:               } & 3.653e+04   \\
+\textbf{Df Residuals:}     &        4018      & \textbf{  BIC:               } & 3.657e+04   \\
+\textbf{Df Model:}         &           4      & \textbf{                     } &             \\
+\textbf{Covariance Type:}  &    nonrobust     & \textbf{                     } &             \\
+\bottomrule
+\end{tabular}
+\begin{tabular}{lcccccc}
+               & \textbf{coef} & \textbf{std err} & \textbf{t} & \textbf{P$> |$t$|$} & \textbf{[0.025} & \textbf{0.975]}  \\
+\midrule
+\textbf{const} &      71.3018  &        0.357     &   199.491  &         0.000        &       70.601    &       72.003     \\
+\textbf{x1}    &      -0.2444  &        0.359     &    -0.681  &         0.496        &       -0.948    &        0.459     \\
+\textbf{x2}    &      -1.3458  &        0.370     &    -3.641  &         0.000        &       -2.071    &       -0.621     \\
+\textbf{x3}    &       0.9211  &        0.393     &     2.347  &         0.019        &        0.152    &        1.691     \\
+\textbf{x4}    &      -3.1517  &        0.402     &    -7.832  &         0.000        &       -3.941    &       -2.363     \\
+\bottomrule
+\end{tabular}
+\begin{tabular}{lclc}
+\textbf{Omnibus:}       & 169.896 & \textbf{  Durbin-Watson:     } &    1.987  \\
+\textbf{Prob(Omnibus):} &   0.000 & \textbf{  Jarque-Bera (JB):  } &  191.623  \\
+\textbf{Skew:}          &  -0.535 & \textbf{  Prob(JB):          } & 2.45e-42  \\
+\textbf{Kurtosis:}      &   2.980 & \textbf{  Cond. No.          } &     1.66  \\
+\bottomrule
+\end{tabular}
+%\caption{OLS Regression Results}
+\end{center}
+
+Notes: \newline
+ [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+    
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Model Summary Dep. Variable (Dependent Variable): Survival Months
+\end{enumerate}
+
+The variable that the model is trying to predict. R-squared: 0.023
+
+R-squared is the proportion of the variance in the dependent variable
+that is predictable from the independent variables. An R-squared of
+0.023 means that only 2.3\% of the variability in Survival Months is
+explained by the model. This is a very low value, indicating that the
+model doesn't explain much of the variability in survival months. Adj.
+R-squared: 0.022
+
+The adjusted R-squared accounts for the number of predictors in the
+model and adjusts for the potential overfitting. It's slightly lower
+than the R-squared, indicating that adding more predictors didn't
+improve the model much. F-statistic: 23.57
+
+The F-statistic tests whether at least one of the predictors is
+statistically significant. A higher F-statistic indicates that the model
+is a better fit than a model with no predictors. Prob (F-statistic):
+2.73e-19
+
+This is the p-value associated with the F-statistic. A very small
+p-value (close to zero) indicates that the model as a whole is
+statistically significant.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Coefficients and Statistical Significance
+\end{enumerate}
+
+Const (Intercept): 71.3018
+
+This is the expected value of Survival Months when all independent
+variables are zero. The constant term is highly significant with a
+p-value of 0.000.
+
+x1, x2, x3, x4 (Independent Variables):
+
+x1 Coefficient: -0.2444
+
+The relationship between x1 and Survival Months is negative, but with a
+p-value of 0.496, it is not statistically significant. This suggests
+that x1 does not have a meaningful impact on Survival Months.
+
+x2 Coefficient: -1.3458
+
+The relationship between x2 and Survival Months is negative and
+statistically significant (p-value = 0.000). For every unit increase in
+x2, Survival Months decreases by approximately 1.35 months.
+
+x3 Coefficient: 0.9211
+
+The relationship between x3 and Survival Months is positive and
+statistically significant (p-value = 0.019). This suggests that as x3
+increases, Survival Months increases by approximately 0.92 months.
+
+x4 Coefficient: -3.1517
+
+The relationship between x4 and Survival Months is strongly negative and
+highly significant (p-value = 0.000). For every unit increase in x4,
+Survival Months decreases by approximately 3.15 months.
+
+Standard Error (std err):
+
+Reflects the accuracy of the coefficient estimates. Smaller standard
+errors indicate more precise estimates.
+
+t-statistic (t) and P\textgreater\textbar t\textbar{} (p-value):
+
+The t-statistic tests whether a coefficient is significantly different
+from zero. The p-value tells you the probability that the coefficient is
+actually zero (i.e., not significant).
+
+Coefficients with p-values less than 0.05 are generally considered
+statistically significant.
+
+The condition number tests for multicollinearity (high correlation
+between independent variables). A value below 30 suggests no serious
+multicollinearity issues.
+
+Conclusion
+
+Model Fit: The R-squared and adjusted R-squared values are low,
+indicating that the model does not explain much of the variability in
+Survival Months.
+
+Significance: While the model overall is statistically significant
+(based on the F-statistic), not all variables are contributing
+meaningfully (e.g., x1 is not significant).
+
+Coefficients: Some variables (x2, x3, x4) have significant coefficients,
+suggesting they do impact survival months, but the effect sizes vary.
+
+Assumptions: The normality tests suggest that the residuals may not be
+normally distributed, which could affect the validity of the model's
+inferences.
+
+Given these results, the model might require refinement, such as
+exploring non-linear relationships, interaction effects, or considering
+other variables that might better explain the variation in survival
+months.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{13}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Predicted values}
+\PY{n}{y\PYZus{}pred} \PY{o}{=} \PY{n}{lg\PYZus{}results}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{sm}\PY{o}{.}\PY{n}{add\PYZus{}constant}\PY{p}{(}\PY{n}{X\PYZus{}lin}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{y\PYZus{}lin}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.6}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{n}{y\PYZus{}lin}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{y\PYZus{}lin}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{n}{y\PYZus{}lin}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{y\PYZus{}lin}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Actual Survival Months}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Predicted Survival Months}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Actual vs. Predicted Survival Months}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{upper left}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+No artists with labels found to put in legend.  Note that artists whose label
+start with an underscore are ignored when legend() is called with no argument.
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{breast_cancer_classification_files/breast_cancer_classification_17_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Interpretation:
+
+Points on the Red Line: Data points on this line indicate perfect
+predictions.
+
+Points Above the Red Line: Data points above the line indicate
+overestimations by the model (the predicted survival is higher than the
+actual survival).
+
+Points Below the Red Line: Data points below the line indicate
+underestimations by the model (the predicted survival is lower than the
+actual survival).
+
+Cluster of Blue Dots: Most of the data points are clustered horizontally
+between 20 and 80 on the x-axis, showing a concentration of actual
+survival months in that range. However, these points spread vertically,
+indicating that the model's predictions vary significantly from the
+actual survival months in this range.
+
+Overall Insight:\\
+The graph shows that while the model predicts survival months, the
+predictions deviate quite a bit from the actual values, as seen by the
+spread of points around the red line. The red line serves as a reference
+for ideal predictions, but most of the points do not lie on this line,
+suggesting that the model may not be very accurate in predicting the
+exact survival months.
+
+    \section{CLASSIFICATION MODELS}\label{classification-models}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{14}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}here we create a plot of the distribution of the categorical columns with repsect to status}
+\PY{n}{columns\PYZus{}to\PYZus{}plot} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{n}{categorical\PYZus{}cols}\PY{p}{]}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{columns}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}\PY{p}{)}
+\PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{col} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{columns\PYZus{}to\PYZus{}plot}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{i}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Adjust based on the number of plots (5 rows, 2 columns here)}
+    \PY{n}{sns}\PY{o}{.}\PY{n}{countplot}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{col}\PY{p}{,} \PY{n}{hue}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{data}\PY{o}{=}\PY{n}{data}\PY{p}{[}\PY{n}{categorical\PYZus{}cols}\PY{p}{]}\PY{p}{,} \PY{n}{palette}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Set2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distribution of }\PY{l+s+si}{\PYZob{}}\PY{n}{col}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ by Status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{n}{col}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{breast_cancer_classification_files/breast_cancer_classification_20_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{15}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}Define the data we are using for classification i.e. the categorical\PYZus{}colss}
+\PY{n}{X} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{n}{categorical\PYZus{}cols}\PY{p}{]}
+\PY{c+c1}{\PYZsh{}One\PYZhy{}Hot encode the variables}
+\PY{n}{X}\PY{o}{=}\PY{n}{pd}\PY{o}{.}\PY{n}{get\PYZus{}dummies}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{drop\PYZus{}first}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{int}\PY{p}{)}
+\PY{n}{X}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{25}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{15}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+    Race\_Other  Race\_White  Marital Status\_Married  Marital Status\_Separated  \textbackslash{}
+0            0           1                       1                         0
+1            0           1                       1                         0
+2            0           1                       0                         0
+3            0           1                       1                         0
+4            0           1                       1                         0
+5            0           1                       0                         0
+6            0           1                       1                         0
+7            0           1                       1                         0
+8            0           1                       0                         0
+9            0           1                       1                         0
+10           0           1                       0                         0
+11           0           1                       1                         0
+12           0           1                       1                         0
+13           0           1                       1                         0
+14           0           1                       0                         0
+15           0           1                       1                         0
+16           0           1                       0                         0
+17           0           1                       1                         0
+18           0           0                       0                         0
+19           0           1                       0                         0
+20           1           0                       1                         0
+21           0           1                       1                         0
+22           0           1                       0                         0
+23           0           1                       1                         0
+24           0           1                       1                         0
+
+    Marital Status\_Single   Marital Status\_Widowed  T Stage \_T2  T Stage \_T3  \textbackslash{}
+0                        0                       0            0            0
+1                        0                       0            1            0
+2                        0                       0            0            1
+3                        0                       0            0            0
+4                        0                       0            1            0
+5                        1                       0            0            0
+6                        0                       0            0            0
+7                        0                       0            1            0
+8                        0                       0            0            0
+9                        0                       0            0            0
+10                       0                       1            0            0
+11                       0                       0            0            1
+12                       0                       0            1            0
+13                       0                       0            0            0
+14                       0                       0            1            0
+15                       0                       0            0            0
+16                       1                       0            1            0
+17                       0                       0            1            0
+18                       0                       0            1            0
+19                       0                       0            1            0
+20                       0                       0            1            0
+21                       0                       0            1            0
+22                       1                       0            1            0
+23                       0                       0            0            1
+24                       0                       0            0            0
+
+    T Stage \_T4  N Stage\_N2  {\ldots}  differentiate\_Poorly differentiated  \textbackslash{}
+0             0           0  {\ldots}                                    1
+1             0           1  {\ldots}                                    0
+2             0           0  {\ldots}                                    0
+3             0           0  {\ldots}                                    1
+4             0           0  {\ldots}                                    1
+5             0           0  {\ldots}                                    0
+6             0           0  {\ldots}                                    0
+7             0           0  {\ldots}                                    0
+8             1           0  {\ldots}                                    1
+9             1           0  {\ldots}                                    0
+10            0           0  {\ldots}                                    0
+11            0           0  {\ldots}                                    1
+12            0           0  {\ldots}                                    1
+13            0           1  {\ldots}                                    1
+14            0           0  {\ldots}                                    0
+15            0           0  {\ldots}                                    0
+16            0           0  {\ldots}                                    0
+17            0           0  {\ldots}                                    0
+18            0           0  {\ldots}                                    0
+19            0           0  {\ldots}                                    0
+20            0           0  {\ldots}                                    0
+21            0           1  {\ldots}                                    0
+22            0           0  {\ldots}                                    1
+23            0           0  {\ldots}                                    1
+24            0           0  {\ldots}                                    1
+
+    differentiate\_Undifferentiated  differentiate\_Well differentiated  \textbackslash{}
+0                                0                                  0
+1                                0                                  0
+2                                0                                  0
+3                                0                                  0
+4                                0                                  0
+5                                0                                  0
+6                                0                                  1
+7                                0                                  0
+8                                0                                  0
+9                                0                                  1
+10                               0                                  0
+11                               0                                  0
+12                               0                                  0
+13                               0                                  0
+14                               0                                  0
+15                               0                                  0
+16                               0                                  0
+17                               0                                  0
+18                               0                                  0
+19                               0                                  0
+20                               0                                  1
+21                               0                                  0
+22                               0                                  0
+23                               0                                  0
+24                               0                                  0
+
+    Grade\_1  Grade\_2  Grade\_3  A Stage\_Regional  Estrogen Status\_Positive  \textbackslash{}
+0         0        0        1                 1                         1
+1         0        1        0                 1                         1
+2         0        1        0                 1                         1
+3         0        0        1                 1                         1
+4         0        0        1                 1                         1
+5         0        1        0                 1                         1
+6         1        0        0                 1                         1
+7         0        1        0                 1                         1
+8         0        0        1                 1                         1
+9         1        0        0                 0                         1
+10        0        1        0                 1                         1
+11        0        0        1                 1                         0
+12        0        0        1                 1                         1
+13        0        0        1                 1                         1
+14        0        1        0                 1                         1
+15        0        1        0                 1                         1
+16        0        1        0                 1                         1
+17        0        1        0                 1                         1
+18        0        1        0                 1                         1
+19        0        1        0                 1                         0
+20        1        0        0                 1                         1
+21        0        1        0                 1                         1
+22        0        0        1                 1                         1
+23        0        0        1                 1                         1
+24        0        0        1                 1                         1
+
+    Progesterone Status\_Positive  Status\_Dead
+0                              1            0
+1                              1            0
+2                              1            0
+3                              1            0
+4                              1            0
+5                              1            0
+6                              1            0
+7                              1            1
+8                              1            0
+9                              1            0
+10                             1            1
+11                             0            0
+12                             1            0
+13                             1            0
+14                             1            0
+15                             1            0
+16                             1            0
+17                             1            0
+18                             1            0
+19                             0            0
+20                             1            0
+21                             1            0
+22                             1            0
+23                             0            0
+24                             1            0
+
+[25 rows x 25 columns]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{16}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}   Visualize the encoded variables above}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{40}\PY{p}{,} \PY{l+m+mi}{35}\PY{p}{)}\PY{p}{)}
+\PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{col} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{columns}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}  \PY{c+c1}{\PYZsh{} Exclude \PYZsq{}Status\PYZus{}Dead\PYZsq{}}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{n}{i}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Adjust based on the number of plots (5 rows, 5 columns here)}
+    \PY{n}{sns}\PY{o}{.}\PY{n}{countplot}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{col}\PY{p}{,} \PY{n}{hue}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Status\PYZus{}Dead}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{data}\PY{o}{=}\PY{n}{X}\PY{p}{,} \PY{n}{palette}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Set2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distribution of }\PY{l+s+si}{\PYZob{}}\PY{n}{col}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ by Status\PYZus{}Dead}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{n}{col}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{breast_cancer_classification_files/breast_cancer_classification_22_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{17}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}select the features(X\PYZus{}cat) and the target(y\PYZus{}cat) }
+\PY{n}{y\PYZus{}cat} \PY{o}{=} \PY{n}{X}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Status\PYZus{}Dead}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{X\PYZus{}cat} \PY{o}{=} \PY{n}{X}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{columns}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Status\PYZus{}Dead}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{18}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}create the test and train sets}
+\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{X\PYZus{}cat}\PY{p}{,} \PY{n}{y\PYZus{}cat}\PY{p}{,} \PY{n}{test\PYZus{}size}\PY{o}{=}\PY{l+m+mf}{0.3}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \subsection{The Logistic Regression
+Model}\label{the-logistic-regression-model}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{19}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}create the logistic regression model}
+\PY{n}{logreg} \PY{o}{=} \PY{n}{LogisticRegression}\PY{p}{(}\PY{p}{)}
+\PY{n}{logreg}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{19}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+LogisticRegression()
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{20}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}make predictions for the model}
+\PY{n}{y\PYZus{}pred\PYZus{}train} \PY{o}{=} \PY{n}{logreg}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{)}
+\PY{n}{y\PYZus{}pred\PYZus{}test} \PY{o}{=} \PY{n}{logreg}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{21}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}Model Evaluation}
+\PY{c+c1}{\PYZsh{}Creating a classification report }
+\PY{n}{train\PYZus{}class\PYZus{}report} \PY{o}{=} \PY{n}{classification\PYZus{}report}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}pred\PYZus{}train}\PY{p}{)}
+\PY{n}{test\PYZus{}class\PYZus{}report} \PY{o}{=} \PY{n}{classification\PYZus{}report}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred\PYZus{}test}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}Display the results of the classification report}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The outcome of the training classification report is:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{train\PYZus{}class\PYZus{}report}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The outcome of the test classification report is:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{test\PYZus{}class\PYZus{}report}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{}Let\PYZsq{}s create a confusion matrix that can helpprovide a summary of prediction results}
+\PY{n}{train\PYZus{}conf\PYZus{}mat} \PY{o}{=} \PY{n}{confusion\PYZus{}matrix}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}pred\PYZus{}train}\PY{p}{)}
+\PY{n}{test\PYZus{}conf\PYZus{}mat} \PY{o}{=} \PY{n}{confusion\PYZus{}matrix}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred\PYZus{}test}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}Display the confusion matrix results for the train and test sets}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The confusion matric for the train set is:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{train\PYZus{}conf\PYZus{}mat}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The confusion matric for the test set is:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{test\PYZus{}conf\PYZus{}mat}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{}Now let\PYZsq{}s look at the accuracy score for both sets }
+\PY{n}{train\PYZus{}acc} \PY{o}{=} \PY{n}{accuracy\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}pred\PYZus{}train}\PY{p}{)}
+\PY{n}{test\PYZus{}acc} \PY{o}{=} \PY{n}{accuracy\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred\PYZus{}test}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}Display the results of the accuracy score}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The accuracy score for the train set is:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{train\PYZus{}acc}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The accuracy score for the test set is:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{test\PYZus{}acc}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{}Fianlly we should consider the ROC curve and the AUC}
+\PY{c+c1}{\PYZsh{}start by getting probability estimates of the positive class}
+\PY{n}{y\PYZus{}train\PYZus{}prob} \PY{o}{=} \PY{n}{logreg}\PY{o}{.}\PY{n}{predict\PYZus{}proba}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+\PY{n}{y\PYZus{}test\PYZus{}prob} \PY{o}{=} \PY{n}{logreg}\PY{o}{.}\PY{n}{predict\PYZus{}proba}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+\PY{c+c1}{\PYZsh{}ROC curve for the training data}
+\PY{n}{fpr\PYZus{}train}\PY{p}{,} \PY{n}{tpr\PYZus{}train}\PY{p}{,} \PY{n}{threshold\PYZus{}train} \PY{o}{=} \PY{n}{roc\PYZus{}curve}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train\PYZus{}prob}\PY{p}{)}
+\PY{n}{roc\PYZus{}auc\PYZus{}train} \PY{o}{=} \PY{n}{auc}\PY{p}{(}\PY{n}{fpr\PYZus{}train}\PY{p}{,} \PY{n}{tpr\PYZus{}train}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}ROC curve for the test set}
+\PY{n}{fpr\PYZus{}test}\PY{p}{,} \PY{n}{tpr\PYZus{}test}\PY{p}{,} \PY{n}{threshold\PYZus{}test} \PY{o}{=} \PY{n}{roc\PYZus{}curve}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test\PYZus{}prob}\PY{p}{)}
+\PY{n}{roc\PYZus{}auc\PYZus{}test} \PY{o}{=} \PY{n}{auc}\PY{p}{(}\PY{n}{fpr\PYZus{}test}\PY{p}{,} \PY{n}{tpr\PYZus{}test}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}plot the ROC curve}
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{fpr\PYZus{}train}\PY{p}{,} \PY{n}{tpr\PYZus{}train}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Training ROC curve (area = }\PY{l+s+si}{\PYZob{}}\PY{n}{roc\PYZus{}auc\PYZus{}train}\PY{l+s+si}{:}\PY{l+s+s1}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{fpr\PYZus{}test}\PY{p}{,} \PY{n}{tpr\PYZus{}test}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Test ROC curve (area = }\PY{l+s+si}{\PYZob{}}\PY{n}{roc\PYZus{}auc\PYZus{}test}\PY{l+s+si}{:}\PY{l+s+s1}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{]}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.05}\PY{p}{]}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{False Positive Rate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{True Positive Rate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ROC Curve for Logistic Regression}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{lower right}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+The outcome of the training classification report is:
+              precision    recall  f1-score   support
+
+           0       0.86      0.99      0.92      2390
+           1       0.59      0.10      0.17       426
+
+    accuracy                           0.85      2816
+   macro avg       0.73      0.54      0.54      2816
+weighted avg       0.82      0.85      0.81      2816
+
+
+
+
+The outcome of the test classification report is:
+              precision    recall  f1-score   support
+
+           0       0.86      0.99      0.92      1017
+           1       0.70      0.14      0.23       190
+
+    accuracy                           0.86      1207
+   macro avg       0.78      0.56      0.57      1207
+weighted avg       0.84      0.86      0.81      1207
+
+
+
+
+The confusion matric for the train set is:
+[[2362   28]
+ [ 385   41]]
+
+
+
+The confusion matric for the test set is:
+[[1006   11]
+ [ 164   26]]
+
+
+
+The accuracy score for the train set is: 0.8533380681818182
+The accuracy score for the test set is: 0.8550124275062138
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{breast_cancer_classification_files/breast_cancer_classification_28_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    For the training set:
+
+The model has high precision (0.86) for class 0, meaning it correctly
+predicted most instances labeled as 0. The recall for class 1 is low
+(0.10), indicating that the model missed many actual positive instances.
+The overall accuracy is 0.85, which is reasonably good. For the testing
+set:
+
+The precision and recall for class 0 have improved slightly. The
+precision for class 1 has also improved, but the recall remains low. The
+overall accuracy has increased slightly to 0.86. Confusion Matrices:
+
+A confusion matrix shows the number of instances predicted for each
+class compared to their actual classes. For the training set:
+
+Many instances of class 0 were correctly predicted (2362), but there
+were 28 false positives. Many instances of class 1 were incorrectly
+predicted as class 0 (385), and only 41 were correctly predicted. For
+the testing set:
+
+Similar patterns are observed, with more correct predictions for class 0
+and fewer correct predictions for class 1. Accuracy Scores:
+
+The accuracy score measures the overall proportion of correct
+predictions. Overall:
+
+The model is performing reasonably well on both training and testing
+sets, with higher accuracy for the testing set. However, the model
+struggles to correctly predict instances of class 1, especially in the
+training set. Further analysis and potential improvements might be
+necessary to address the class imbalance and improve the model's
+performance on class 1.
+
+Graph Interpretation:
+
+Shape of the curve: A ROC curve ideally should be as close to the
+top-left corner as possible. This indicates that the model has high TPR
+and low FPR, which is desirable.
+
+Comparison of curves: In this graph, the test ROC curve is slightly
+above the training ROC curve, suggesting that the model might be
+slightly underfitting the training data. However, both curves are
+significantly above the random classifier line, indicating that the
+model is performing better than random guessing.
+
+Area Under the Curve (AUC): The AUC is a metric that quantifies the
+overall performance of a model. A higher AUC indicates better
+performance. In this case, the AUC for both training and testing curves
+is above 0.5, indicating that the model is performing better than random
+guessing. The test AUC is slightly higher than the training AUC, which
+is a good sign.
+
+Overall, the ROC curve suggests that the logistic regression model is
+performing reasonably well on both training and testing data, and is
+significantly better than a random classifier. The slight underfitting
+indicated by the difference between the training and testing curves
+might be addressed by adjusting the model's hyperparameters or
+collecting more data.
+
+    \subsection{Decision tree model}\label{decision-tree-model}
+
+    \subsubsection{Vanilla Model of the Decision
+Tree}\label{vanilla-model-of-the-decision-tree}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{22}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}Initiate the classifier}
+\PY{n}{clf} \PY{o}{=} \PY{n}{DecisionTreeClassifier}\PY{p}{(}\PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{}fit it on the training data}
+\PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{22}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+DecisionTreeClassifier(random\_state=42)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{23}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Make predictions}
+\PY{n}{y\PYZus{}tr\PYZus{}pred} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{)}
+\PY{n}{y\PYZus{}te\PYZus{}pred} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{24}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Evaluate the model}
+\PY{c+c1}{\PYZsh{}Look at the classification report}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The classification report for the training set is:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{classification\PYZus{}report}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}tr\PYZus{}pred}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The classification report for the test set is:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{classification\PYZus{}report}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}te\PYZus{}pred}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+se}{\PYZbs{}\PYZbs{}}\PY{l+s+s1}{n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}Show accuracy for both sets}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{the accuracy for the training set is:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{accuracy\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}tr\PYZus{}pred}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{th eaccuracy for the test set is:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{accuracy\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}te\PYZus{}pred}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}Create the ROC curve and AUC for both sets}
+\PY{c+c1}{\PYZsh{}start by getting the probability for each od the sets}
+\PY{n}{clf\PYZus{}train\PYZus{}prob} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{predict\PYZus{}proba}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]} 
+\PY{n}{clf\PYZus{}test\PYZus{}prob} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{predict\PYZus{}proba}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]} 
+\PY{c+c1}{\PYZsh{}calculate the ROC and auc }
+\PY{n}{train\PYZus{}fpr}\PY{p}{,} \PY{n}{train\PYZus{}tpr}\PY{p}{,} \PY{n}{train\PYZus{}threshold} \PY{o}{=} \PY{n}{roc\PYZus{}curve}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{clf\PYZus{}train\PYZus{}prob}\PY{p}{)}
+\PY{n}{train\PYZus{}auc} \PY{o}{=} \PY{n}{auc}\PY{p}{(}\PY{n}{train\PYZus{}fpr}\PY{p}{,} \PY{n}{train\PYZus{}tpr}\PY{p}{)}
+\PY{n}{test\PYZus{}fpr}\PY{p}{,} \PY{n}{test\PYZus{}tpr}\PY{p}{,} \PY{n}{test\PYZus{}threshold} \PY{o}{=} \PY{n}{roc\PYZus{}curve}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{clf\PYZus{}test\PYZus{}prob}\PY{p}{)}
+\PY{n}{test\PYZus{}auc} \PY{o}{=} \PY{n}{auc}\PY{p}{(}\PY{n}{test\PYZus{}fpr}\PY{p}{,} \PY{n}{test\PYZus{}tpr}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}plot the ROC roc\PYZus{}curve}
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{train\PYZus{}fpr}\PY{p}{,} \PY{n}{train\PYZus{}tpr}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Train AUC = }\PY{l+s+si}{\PYZob{}}\PY{n}{train\PYZus{}auc}\PY{l+s+si}{:}\PY{l+s+s1}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{test\PYZus{}fpr}\PY{p}{,} \PY{n}{test\PYZus{}tpr}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Test AUC = }\PY{l+s+si}{\PYZob{}}\PY{n}{test\PYZus{}auc}\PY{l+s+si}{:}\PY{l+s+s1}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{grey}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{False Positive Rate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{True Positive Rate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ROC Curve}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lower right}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+The classification report for the training set is:
+              precision    recall  f1-score   support
+
+           0       0.88      0.99      0.94      2390
+           1       0.89      0.26      0.40       426
+
+    accuracy                           0.88      2816
+   macro avg       0.89      0.63      0.67      2816
+weighted avg       0.88      0.88      0.85      2816
+
+
+
+The classification report for the test set is:
+              precision    recall  f1-score   support
+
+           0       0.87      0.97      0.91      1017
+           1       0.53      0.21      0.30       190
+
+    accuracy                           0.85      1207
+   macro avg       0.70      0.59      0.60      1207
+weighted avg       0.81      0.85      0.82      1207
+
+
+\textbackslash{}n
+the accuracy for the training set is: 0.8831676136363636
+th eaccuracy for the test set is: 0.8458989229494615
+
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{breast_cancer_classification_files/breast_cancer_classification_34_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \#\#\# Insights from the results 1. Precision, Recall and F1\_score
+class 0 (Majority Class):
+
+\begin{verbatim}
+Training Set: Precision = 0.88, Recall = 0.99, F1-Score = 0.94
+Test Set: Precision = 0.87, Recall = 0.97, F1-Score = 0.91
+The model performs very well for class 0, with high precision, recall, and F1-score in both the training and test sets. This suggests that the model is highly confident and accurate when predicting the majority class (class 0).
+
+Class 1 (Minority Class):
+
+Training Set: Precision = 0.89, Recall = 0.26, F1-Score = 0.40
+Test Set: Precision = 0.53, Recall = 0.21, F1-Score = 0.30
+The performance for class 1 is notably weaker, particularly in terms of recall and F1-score. This indicates that the model is struggling to correctly identify instances of the minority class (class 1), leading to many false negatives. The low recall means that many positive instances (class 1) are being missed.
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  Imbalance in Performance
+
+  The disparity between the performance on class 0 and class 1 suggests
+  that the model is biased towards predicting the majority class. This
+  is common in imbalanced datasets where one class significantly
+  outnumbers the other. The model's high accuracy is driven by its
+  performance on class 0, but its ability to detect class 1 is poor.
+\item
+  Conclusion
+
+  While the model performs well overall, its ability to detect the
+  minority class (class 1) is lacking.There is aneed to address the
+  class imbalance in the data.
+\end{enumerate}
+
+\subsubsection{Addressing class
+imbalance}\label{addressing-class-imbalance}
+
+There are several ways in whiv=ch the class imbalance can be addressed
+and the one of the methods we are going to consider first is the use of
+SMOTE. This is a resampling technique where we use oversampling for the
+minority class.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{25}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}Apply SMOTE to the training dta}
+\PY{n}{smote} \PY{o}{=} \PY{n}{SMOTE}\PY{p}{(}\PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{)}
+\PY{n}{smote\PYZus{}X\PYZus{}train}\PY{p}{,} \PY{n}{smote\PYZus{}y\PYZus{}train} \PY{o}{=} \PY{n}{smote}\PY{o}{.}\PY{n}{fit\PYZus{}resample}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,}\PY{n}{y\PYZus{}train}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{26}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}Train a model}
+\PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{smote\PYZus{}X\PYZus{}train}\PY{p}{,} \PY{n}{smote\PYZus{}y\PYZus{}train}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{26}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+DecisionTreeClassifier(random\_state=42)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{27}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}create predctions for train and test sets}
+\PY{n}{smote\PYZus{}train\PYZus{}pred} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{smote\PYZus{}X\PYZus{}train}\PY{p}{)}
+\PY{n}{smote\PYZus{}test\PYZus{}pred} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{28}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Classification Report for Training Set:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{classification\PYZus{}report}\PY{p}{(}\PY{n}{smote\PYZus{}y\PYZus{}train}\PY{p}{,} \PY{n}{smote\PYZus{}train\PYZus{}pred}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Classification Report for Test Set:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{classification\PYZus{}report}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{smote\PYZus{}test\PYZus{}pred}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}Show accuracy for both sets}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{the accuracy for the training set is:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{accuracy\PYZus{}score}\PY{p}{(}\PY{n}{smote\PYZus{}y\PYZus{}train}\PY{p}{,} \PY{n}{smote\PYZus{}train\PYZus{}pred}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{th eaccuracy for the test set is:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{accuracy\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{smote\PYZus{}test\PYZus{}pred}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}Create the ROC curve and AUC for both sets}
+\PY{c+c1}{\PYZsh{}start by getting the probability for each od the sets}
+\PY{n}{smote\PYZus{}train\PYZus{}prob} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{predict\PYZus{}proba}\PY{p}{(}\PY{n}{smote\PYZus{}X\PYZus{}train}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]} 
+\PY{n}{smote\PYZus{}test\PYZus{}prob} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{predict\PYZus{}proba}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]} 
+\PY{c+c1}{\PYZsh{}calculate the ROC and auc }
+\PY{n}{smote\PYZus{}train\PYZus{}fpr}\PY{p}{,} \PY{n}{smote\PYZus{}train\PYZus{}tpr}\PY{p}{,} \PY{n}{smote\PYZus{}train\PYZus{}threshold} \PY{o}{=} \PY{n}{roc\PYZus{}curve}\PY{p}{(}\PY{n}{smote\PYZus{}y\PYZus{}train}\PY{p}{,} \PY{n}{smote\PYZus{}train\PYZus{}prob}\PY{p}{)}
+\PY{n}{train\PYZus{}auc} \PY{o}{=} \PY{n}{auc}\PY{p}{(}\PY{n}{smote\PYZus{}train\PYZus{}fpr}\PY{p}{,} \PY{n}{smote\PYZus{}train\PYZus{}tpr}\PY{p}{)}
+\PY{n}{smote\PYZus{}test\PYZus{}fpr}\PY{p}{,} \PY{n}{smote\PYZus{}test\PYZus{}tpr}\PY{p}{,} \PY{n}{smote\PYZus{}test\PYZus{}threshold} \PY{o}{=} \PY{n}{roc\PYZus{}curve}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{smote\PYZus{}test\PYZus{}prob}\PY{p}{)}
+\PY{n}{test\PYZus{}auc} \PY{o}{=} \PY{n}{auc}\PY{p}{(}\PY{n}{smote\PYZus{}test\PYZus{}fpr}\PY{p}{,} \PY{n}{smote\PYZus{}test\PYZus{}tpr}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}plot the ROC roc\PYZus{}curve}
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{smote\PYZus{}train\PYZus{}fpr}\PY{p}{,} \PY{n}{smote\PYZus{}train\PYZus{}tpr}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Train AUC = }\PY{l+s+si}{\PYZob{}}\PY{n}{train\PYZus{}auc}\PY{l+s+si}{:}\PY{l+s+s1}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{smote\PYZus{}test\PYZus{}fpr}\PY{p}{,} \PY{n}{smote\PYZus{}test\PYZus{}tpr}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Test AUC = }\PY{l+s+si}{\PYZob{}}\PY{n}{test\PYZus{}auc}\PY{l+s+si}{:}\PY{l+s+s1}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{grey}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{False Positive Rate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{True Positive Rate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ROC Curve}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lower right}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Classification Report for Training Set:
+              precision    recall  f1-score   support
+
+           0       0.76      0.79      0.78      2390
+           1       0.78      0.75      0.77      2390
+
+    accuracy                           0.77      4780
+   macro avg       0.77      0.77      0.77      4780
+weighted avg       0.77      0.77      0.77      4780
+
+Classification Report for Test Set:
+              precision    recall  f1-score   support
+
+           0       0.89      0.74      0.81      1017
+           1       0.27      0.49      0.35       190
+
+    accuracy                           0.71      1207
+   macro avg       0.58      0.62      0.58      1207
+weighted avg       0.79      0.71      0.74      1207
+
+
+
+
+the accuracy for the training set is: 0.7713389121338912
+th eaccuracy for the test set is: 0.7050538525269263
+
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{breast_cancer_classification_files/breast_cancer_classification_39_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Now while the use of SMOTE has addressed the issue of class imbalance ,
+the model may still need further refinement to generalize better on
+unseen data. Here below are some key highlights supporting this:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  ROC Curve Analysis:
+
+  Train AUC: 0.86 Test AUC: 0.62 The train AUC has increased slightly
+  from 0.83 to 0.86, indicating that the model is better at
+  distinguishing between classes on the training data after SMOTE was
+  applied. The test AUC remains the same at 0.62, suggesting that the
+  model's ability to generalize to unseen data hasn't improved
+  significantly.
+\item
+  Classification Report Summary:
+
+  Training Set (After SMOTE): Accuracy: 0.77 Precision for class 1: 0.78
+  Recall for class 1: 0.75 F1-score for class 1: 0.77
+
+  Test Set (After SMOTE): Accuracy: 0.71 Precision for class 1: 0.27
+  Recall for class 1: 0.49 F1-score for class 1: 0.35 Interpretation:
+\item
+  Impact of SMOTE:
+
+  SMOTE has balanced the classes in the training data, leading to a more
+  balanced precision and recall for both classes in the training set.
+  For the test set, the recall for class 1 (the minority class) improved
+  from 0.21 to 0.49, indicating the model's improved ability to identify
+  positive cases. However, the precision for class 1 decreased from 0.53
+  to 0.27, showing that the model is now making more false positive
+  errors.
+\item
+  Accuracy Decrease:
+
+  The overall accuracy on both training and test sets has decreased
+  compared to before applying SMOTE (from 0.88 to 0.77 on the training
+  set and from 0.85 to 0.71 on the test set). This is typical when using
+  SMOTE as the model is forced to learn more about the minority class,
+  which can reduce accuracy but improve the balance of errors between
+  classes. Model Generalization:
+\end{enumerate}
+
+The test AUC remains unchanged at 0.62, which suggests that while the
+model's ability to handle class imbalance has improved, its overall
+discriminatory power on unseen data hasn't.
+
+Now we want to try and tune this model by trying to fine tune the
+hyperparameters and then have a final model.
+
+\subsubsection{Hyperparaameter tuning I}\label{hyperparaameter-tuning-i}
+
+We want to start by looking for the maximum depth of the model
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{29}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Initialize lists to store results for different depths}
+\PY{n}{depths} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{21}\PY{p}{)}
+\PY{n}{train\PYZus{}aucs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{test\PYZus{}aucs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{train\PYZus{}accuracies} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{test\PYZus{}accuracies} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} Loop over different values of max\PYZus{}depth}
+\PY{k}{for} \PY{n}{max\PYZus{}depth} \PY{o+ow}{in} \PY{n}{depths}\PY{p}{:}
+    \PY{c+c1}{\PYZsh{} Calculate ROC AUC scores for both sets}
+    \PY{n}{train\PYZus{}auc} \PY{o}{=} \PY{n}{roc\PYZus{}auc\PYZus{}score}\PY{p}{(}\PY{n}{smote\PYZus{}y\PYZus{}train}\PY{p}{,} \PY{n}{smote\PYZus{}train\PYZus{}prob}\PY{p}{)}
+    \PY{n}{test\PYZus{}auc} \PY{o}{=} \PY{n}{roc\PYZus{}auc\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{smote\PYZus{}test\PYZus{}prob}\PY{p}{)}
+    
+    \PY{c+c1}{\PYZsh{} Calculate accuracy for both sets}
+    \PY{n}{train\PYZus{}accuracy} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{smote\PYZus{}X\PYZus{}train}\PY{p}{,} \PY{n}{smote\PYZus{}y\PYZus{}train}\PY{p}{)}
+    \PY{n}{test\PYZus{}accuracy} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}
+    
+    \PY{c+c1}{\PYZsh{} Store the results}
+    \PY{n}{train\PYZus{}aucs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{train\PYZus{}auc}\PY{p}{)}
+    \PY{n}{test\PYZus{}aucs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{test\PYZus{}auc}\PY{p}{)}
+    \PY{n}{train\PYZus{}accuracies}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{train\PYZus{}accuracy}\PY{p}{)}
+    \PY{n}{test\PYZus{}accuracies}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{test\PYZus{}accuracy}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Step 5: Plot AUC scores for different max\PYZus{}depth values}
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{depths}\PY{p}{,} \PY{n}{train\PYZus{}aucs}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Train AUC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{depths}\PY{p}{,} \PY{n}{test\PYZus{}aucs}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Test AUC}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max\PYZus{}depth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AUC Score}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AUC Score vs. max\PYZus{}depth for Decision Tree}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Step 6: Plot Accuracy for different max\PYZus{}depth values}
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{depths}\PY{p}{,} \PY{n}{train\PYZus{}accuracies}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Train Accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{depths}\PY{p}{,} \PY{n}{test\PYZus{}accuracies}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Test Accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max\PYZus{}depth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Accuracy vs. max\PYZus{}depth for Decision Tree}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Step 7: Output classification report for the best max\PYZus{}depth}
+\PY{n}{best\PYZus{}depth} \PY{o}{=} \PY{n}{depths}\PY{p}{[}\PY{n}{test\PYZus{}aucs}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n+nb}{max}\PY{p}{(}\PY{n}{test\PYZus{}aucs}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Best max\PYZus{}depth based on Test AUC: }\PY{l+s+si}{\PYZob{}}\PY{n}{best\PYZus{}depth}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{n}{best\PYZus{}clf} \PY{o}{=} \PY{n}{DecisionTreeClassifier}\PY{p}{(}\PY{n}{max\PYZus{}depth}\PY{o}{=}\PY{n}{best\PYZus{}depth}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{)}
+\PY{n}{best\PYZus{}clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{smote\PYZus{}X\PYZus{}train}\PY{p}{,} \PY{n}{smote\PYZus{}y\PYZus{}train}\PY{p}{)}
+
+\PY{n}{smote\PYZus{}train\PYZus{}pred} \PY{o}{=} \PY{n}{best\PYZus{}clf}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{smote\PYZus{}X\PYZus{}train}\PY{p}{)}
+\PY{n}{smote\PYZus{}test\PYZus{}pred} \PY{o}{=} \PY{n}{best\PYZus{}clf}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Classification Report for Training Set:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{classification\PYZus{}report}\PY{p}{(}\PY{n}{smote\PYZus{}y\PYZus{}train}\PY{p}{,} \PY{n}{smote\PYZus{}train\PYZus{}pred}\PY{p}{)}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Classification Report for Test Set:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{classification\PYZus{}report}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{smote\PYZus{}test\PYZus{}pred}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{train\PYZus{}auc} \PY{o}{=} \PY{n}{roc\PYZus{}auc\PYZus{}score}\PY{p}{(}\PY{n}{smote\PYZus{}y\PYZus{}train}\PY{p}{,} \PY{n}{best\PYZus{}clf}\PY{o}{.}\PY{n}{predict\PYZus{}proba}\PY{p}{(}\PY{n}{smote\PYZus{}X\PYZus{}train}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+\PY{n}{test\PYZus{}auc} \PY{o}{=} \PY{n}{roc\PYZus{}auc\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{best\PYZus{}clf}\PY{o}{.}\PY{n}{predict\PYZus{}proba}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Train AUC: }\PY{l+s+si}{\PYZob{}}\PY{n}{train\PYZus{}auc}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Test AUC: }\PY{l+s+si}{\PYZob{}}\PY{n}{test\PYZus{}auc}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Plot ROC curves}
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{fpr\PYZus{}train}\PY{p}{,} \PY{n}{tpr\PYZus{}train}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Train ROC Curve}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{fpr\PYZus{}test}\PY{p}{,} \PY{n}{tpr\PYZus{}test}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Test ROC Curve}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Random Classifier}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{False Positive Rate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{True Positive Rate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ROC Curve for Decision Tree}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{breast_cancer_classification_files/breast_cancer_classification_41_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{breast_cancer_classification_files/breast_cancer_classification_41_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Best max\_depth based on Test AUC: 1
+Classification Report for Training Set:
+              precision    recall  f1-score   support
+
+           0       0.56      0.91      0.69      2390
+           1       0.75      0.27      0.40      2390
+
+    accuracy                           0.59      4780
+   macro avg       0.66      0.59      0.54      4780
+weighted avg       0.66      0.59      0.54      4780
+
+Classification Report for Test Set:
+              precision    recall  f1-score   support
+
+           0       0.88      0.92      0.90      1017
+           1       0.43      0.33      0.37       190
+
+    accuracy                           0.83      1207
+   macro avg       0.66      0.62      0.64      1207
+weighted avg       0.81      0.83      0.82      1207
+
+Train AUC: 0.59
+Test AUC: 0.62
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{breast_cancer_classification_files/breast_cancer_classification_41_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    
+
+    Graph Interpretation:
+
+Shape of the curve: A ROC curve ideally should be as close to the
+top-left corner as possible. This indicates that the model has high TPR
+and low FPR, which is desirable.
+
+Comparison of curves: In this graph, the train ROC curve is slightly
+above the test ROC curve, suggesting that the model might be slightly
+overfitting the training data. However, both curves are significantly
+above the random classifier line, indicating that the model is
+performing better than random guessing.
+
+Area Under the Curve (AUC): The AUC is a metric that quantifies the
+overall performance of a model. A higher AUC indicates better
+performance. In this case, the AUC for both train and test curves would
+likely be higher than 0.5, indicating that the model is performing
+better than random guessing.
+
+Overall, the ROC curve suggests that the decision tree model is
+performing reasonably well on both training and testing data, and is
+significantly better than a random classifier. However, there might be
+some overfitting, as indicated by the slight difference between the
+train and test curves. To improve the model's performance, techniques
+like regularization or hyperparameter tuning could be considered.
+
+Here are some key take aways from the results above: 1. The model's
+simplicity: The ideal max\_depth will be 1suggesting the model is very
+simple, reflected in the low performance of themetrics especially for
+class 1 2. The low recall and F1-scores for class 1 in both the training
+and test sets suggest that the model struggles to detect the minority
+class, which is a common issue in imbalanced datasets. 3. Although there
+isn't a large gap between Train and Test AUC, the overall performance is
+poor, suggesting that a deeper or more complex model may be necessary to
+capture the patterns in the data, though care must be taken to avoid
+overfitting
+
+From the data above it is clear that when we use that data that has been
+oversampled that all the test performance does not increase accross all
+samples hence there is no positive effect on the test performance.
+
+It is safe to make the assumption that whether we include a different
+approach of tuning the decion tree the results will be fairly the same
+in that there willl be no change in the test performance of the model.
+
+    \subsection{LOGISTIC REGRESSION vs DECISION
+TREE}\label{logistic-regression-vs-decision-tree}
+
+\subsubsection{Analysis of the two
+models}\label{analysis-of-the-two-models}
+
+Choosing the better model between the logistic regression and decision
+tree (with SMOTE) depends on your specific goals and the trade-offs
+you're willing to make. Here's a comparison based on the provided
+results:
+
+\subsubsection{Logistic Regression}\label{logistic-regression}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Training Accuracy}: 85.33\%
+\item
+  \textbf{Test Accuracy}: 85.50\%
+\item
+  \textbf{Precision and Recall}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Class 0}: High precision (0.86), recall (0.99), and f1-score
+    (0.92) on both training and test sets.
+  \item
+    \textbf{Class 1}: Lower precision (0.59 train, 0.70 test) and very
+    low recall (0.10 train, 0.14 test).
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Decision Tree tuned (max\_depth) after
+SMOTE}\label{decision-tree-tuned-max_depth-after-smote}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Training Accuracy}: 59\% (This seems lower compared to the
+  logistic regression, possibly due to overfitting or the model
+  complexity.)
+\item
+  \textbf{Test Accuracy}: 83\%
+\item
+  \textbf{Precision and Recall}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Class 0}: Precision (0.88 test), recall (0.92 test), and
+    f1-score (0.90 test) are high.
+  \item
+    \textbf{Class 1}: Lower precision (0.43 test), recall (0.33 test),
+    and f1-score (0.37 test).
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Comparative Analysis}\label{comparative-analysis}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Overall Accuracy}: Logistic regression has higher accuracy on
+  both the training and test sets compared to the tuned decision tree.
+\item
+  \textbf{Class 0 Performance}: Both models perform well on Class 0, but
+  logistic regression maintains consistency across both sets.
+\item
+  \textbf{Class 1 Performance}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The tuned decision tree shows some improvement in recall and
+    precision for Class 1 compared to the original logistic regression,
+    but the metrics are still relatively low.
+  \item
+    Logistic regression's performance on Class 1 is quite poor, but the
+    decision tree performs better in recall, suggesting it may better
+    identify some of the minority class samples.
+  \end{itemize}
+\end{enumerate}
+
+\subsubsection{Suitability}\label{suitability}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Logistic Regression}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Pros}: Consistently high performance on Class 0, high
+    overall accuracy.
+  \item
+    \textbf{Cons}: Struggles with Class 1, leading to a potential under
+    representation of the minority class.
+  \end{itemize}
+\item
+  \textbf{Decision Tree with SMOTE}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Pros}: Improved handling of the minority class (Class 1) due
+    to SMOTE.
+  \item
+    \textbf{Cons}: Lower overall accuracy and training accuracy,
+    potentially overfitting or too simplistic due to max\_depth of 1.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Recommendation}\label{recommendation}
+
+If the primary concern is overall accuracy and robust performance on the
+majority class (Class 0), \textbf{logistic regression} is better.
+However, if improving performance on the minority class (Class 1) is
+critical and there is a posibility of experimenting with more complex
+models, the \textbf{decision tree with SMOTE} might offer better
+potential with further tuning.
+
+Trying more advanced models like Random Forests, Gradient Boosting, or
+Support Vector Machines should be considered, which can potentially
+offer a better balance between precision and recall for both classes.
+
+To explore further adjustments or other models, the choice depends on
+the specific application and which metric (precision, recall, F1-score)
+is more important for the hospital.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}
