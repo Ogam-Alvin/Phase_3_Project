@@ -86,6 +86,35 @@ There are two models that have been used for classification
 2. Decision Tree
 
 ##### Logistic Regression
+For the training set:
+
+The model has high precision (0.86) for class 0, meaning it correctly predicted most instances labeled as 0.
+The recall for class 1 is low (0.10), indicating that the model missed many actual positive instances.
+The overall accuracy is 0.85, which is reasonably good.
+For the testing set:
+
+The precision and recall for class 0 have improved slightly.
+The precision for class 1 has also improved, but the recall remains low.
+The overall accuracy has increased slightly to 0.86.
+Confusion Matrices:
+
+A confusion matrix shows the number of instances predicted for each class compared to their actual classes.
+For the training set:
+
+Many instances of class 0 were correctly predicted (2362), but there were 28 false positives.
+Many instances of class 1 were incorrectly predicted as class 0 (385), and only 41 were correctly predicted.
+For the testing set:
+
+Similar patterns are observed, with more correct predictions for class 0 and fewer correct predictions for class 1.
+Accuracy Scores:
+
+The accuracy score measures the overall proportion of correct predictions.
+Overall:
+
+The model is performing reasonably well on both training and testing sets, with higher accuracy for the testing set.
+However, the model struggles to correctly predict instances of class 1, especially in the training set.
+Further analysis and potential improvements might be necessary to address the class imbalance and improve the model's performance on class 1.
+
 ##### Decision Tree
 For the decision tree there were approximately three versions of the model that were used:
 1. Vanilla Model
